@@ -1,17 +1,11 @@
 async function getUser(id: number) {
-  const res = await fetch(`http://localhost:3000/api/users/${id}`);
+  const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+    next: { revalidate: 60 },
+  });
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
   return data;
 }
-
-// export interface User {
-//   id: number;
-//   username: string;
-//   email: string;
-//   followers: number;
-//   following: number;
-// }
 
 export default async function UserPage({ params }) {
   const user = await getUser(params.id);
